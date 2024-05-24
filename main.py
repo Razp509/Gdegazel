@@ -1,6 +1,5 @@
 import pygsheets
 from datetime import datetime
-from date_funk import days_in_month
 
 
 gc = pygsheets.authorize()
@@ -13,16 +12,40 @@ month = dt.month
 day = dt.day
 
 
-lst_col = {4:'A', 5:'B', 6:'C', 7:'D', 8:'E', 9:'F', 10:'G', 11:'H', 12:'I'}
+col_month = {4:'B', 5:'D', 6:'F', 7:'H', 8:'j', 9:'L', 10:'N', 11:'P', 12:'R'}
+col_month_value = col_month.get(month)
 
-num_col = lst_col.get(month)
+
+        
+def cell_value(money_received):
+    col = f'{col_month_value}{day + 1}'
+    value_cell = wks.cell(col)    
+    if value_cell.value == '':
+        value_cell.value = money_received
+        value_cell.update()
+        return "Данные внесены!"
+    else:
+        return "Сегодня данные уже вносились!"
+    
+
+def cell_clear():
+    col = f'{col_month_value}{day + 1}'
+    value_cell = wks.cell(col)
+    # value_cell.value = ''
+    value_cell.value = ''
+    value_cell.update()
+    return "Ячейка очищена"
 
 
-for i in range(4, days_in_month(month)):
-    col = f'{num_col}{i}'
-    header = wks.cell(col)
-    if header.value == '':
-        wks.apply_format([col], ["NUMBER"])
-        header.value = day
-        header.update()
-        break
+def work_day():
+    col = 'A36'
+    cell_col = wks.cell(col)    
+    val = int(cell_col.value)
+    return val
+
+
+def work_money():
+    col = 'C36'
+    cell_col = wks.cell(col)
+    val = int(cell_col.value)
+    return val
