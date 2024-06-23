@@ -2,7 +2,7 @@ import pygsheets
 from datetime import datetime
 
 
-gc = pygsheets.authorize(service_file='D:/PythonProjects/Gdegazel/gdegazel-service-acount.json')
+gc = pygsheets.authorize(service_file='gdegazel-service-acount.json')
 
 sh = gc.open('Gdegazel_table')
 wks = sh.sheet1
