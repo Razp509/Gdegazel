@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import sys
-from os import getenv
+import os
 
 from main import cell_value, cell_clear, all_work_day, all_work_money, work_day, work_money
 
@@ -13,14 +13,14 @@ from aiogram import F
 from aiogram.types import Message, CallbackQuery
 
 
-
 from keyboards.keyboards import keyboard_inline
 #from handlers.handlers import 
 
 
 from aiogram import F
 
-TOKEN = getenv('BOT_TOKEN')
+ 
+TOKEN = os.environ.get('BOT_TOKEN')
 
 
 dp = Dispatcher()

@@ -1,0 +1,5 @@
+services:
+  bot:
+    image: gdegazel-bot
+    env_file:
+      - .env
