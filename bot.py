@@ -20,7 +20,7 @@ from keyboards.keyboards import keyboard_inline
 
 from aiogram import F
 
-TOKEN = '7053797585:AAHDabDqUZsw22zyfwaBWBxFZiZk8dYyix0' #getenv('BOT_TOKEN')
+TOKEN = getenv('BOT_TOKEN')
 
 
 dp = Dispatcher()
