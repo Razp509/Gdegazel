@@ -1,5 +1,6 @@
 services:
   bot:
     image: gdegazel-bot
+    restart: always
     env_file:
       - .env
