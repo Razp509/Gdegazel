@@ -19,7 +19,7 @@ work_day_month_value = work_day_month.get(month)
 
 
         
-def cell_value(money_received):
+def into_cell(money_received):
     col = f'{col_month_value}{day + 1}'
     value_cell = wks.cell(col)    
     if value_cell.value == '':

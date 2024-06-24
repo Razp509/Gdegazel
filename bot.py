@@ -3,7 +3,7 @@ import logging
 import sys
 import os
 
-from main import cell_value, cell_clear, all_work_day, all_work_money, work_day, work_money
+from main import into_cell, cell_clear, all_work_day, all_work_money, work_day, work_money
 
 from aiogram import Bot, Dispatcher, html
 from aiogram.client.default import DefaultBotProperties
@@ -14,7 +14,6 @@ from aiogram.types import Message, CallbackQuery
 
 
 from keyboards.keyboards import keyboard_inline
-#from handlers.handlers import 
 
 
 from aiogram import F
@@ -34,7 +33,7 @@ async def process_start_command(message: Message) -> None:
 
 @dp.callback_query(F.data == "500")
 async def send_random_value(callback: CallbackQuery):
-    value = cell_value(500)
+    value = into_cell(500)
     await callback.answer(
         text=str(value),
         show_alert=True
@@ -43,7 +42,7 @@ async def send_random_value(callback: CallbackQuery):
 
 @dp.callback_query(F.data == "800")
 async def send_random_value(callback: CallbackQuery):
-    value = cell_value(800)
+    value = into_cell(800)
     await callback.answer(
         text=str(value),
         show_alert=True
@@ -53,11 +52,16 @@ async def send_random_value(callback: CallbackQuery):
 @dp.callback_query(F.data == "другое")
 async def send_random_value(callback: CallbackQuery):    
     await callback.message.answer(
-        text='Введите сумму'
+        text='Введите сумму:'
     )
     @dp.message(F.text)
     async def extract_data(message: Message):
-        await message.answer(f"{message.text} прочитанно", parse_mode="HTML")
+        diferent_sum = message.text
+        value = into_cell(diferent_sum)
+        await callback.answer(
+        text=str(value),
+        show_alert=True
+    )
 
 
 @dp.callback_query(F.data == "очистить")
@@ -76,6 +80,7 @@ async def any_message(callback: CallbackQuery):
         f"Всего дней отработанно: {a_w_day}, в этом месяце: {w_day}\n"
         f"Общая сумма заработка: {a_w_money}, в этом месяце: {w_money}"
     )
+    await callback.answer()
 
 
 async def main() -> None:
