@@ -1,6 +1,10 @@
+version: '3.8'
+
 services:
   bot:
-    image: gdegazel-bot
+    build: .
     restart: always
     env_file:
-      - env
+      - .env
+    volumes:
+      - .:/usr/src/app
