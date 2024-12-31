@@ -28,8 +28,16 @@ async def process_start_command(message: Message) -> None:
     if not is_allowed(message.from_user.id):
         await message.reply("Доступ запрещен.")
         return
-       
-    await message.reply(f"Привет, {html.bold(message.from_user.full_name)}!", reply_markup=keyboard_inline)
+
+    await message.reply(
+        f"Привет, {html.bold(message.from_user.full_name)}!\n\n"
+        f"Дополнительные ссылки:\n"
+        f"- {html.link('Таблица: Газель - переводы', settings.TABLE_LINK_GAZ_TRANSFER)}\n"
+        f"- {html.link('Таблица: Газель - общее', settings.TABLE_LINK_GAZ_TOTAL)}\n"
+        f"- {html.link('Таблица: Daihatsu - общее', settings.TABLE_LINK_HIJET_TOTAL)}",
+        reply_markup=keyboard_inline,
+        parse_mode=ParseMode.HTML
+    )
 
 
 @dp.callback_query(F.data == "500")
@@ -107,11 +115,7 @@ async def send_info(callback: CallbackQuery):
 
     await callback.message.answer(
         f"Всего дней отработанно: {a_w_day}, в этом месяце: {w_day}\n"
-        f"Общая сумма заработка: {a_w_money}, в этом месяце: {w_money}\n\n"
-        f"Дополнительные ссылки:\n"
-        f"- {html.link('Таблица: Газель - переводы', settings.TABLE_LINK_GAZ_TRANSFER)}\n"
-        f"- {html.link('Таблица: Газель - общее', settings.TABLE_LINK_GAZ_TOTAL)}\n"
-        f"- {html.link('Таблица: Daihatsu - общее', settings.TABLE_LINK_HIJET_TOTAL)}",
+        f"Общая сумма заработка: {a_w_money}, в этом месяце: {w_money}\n\n",
         parse_mode=ParseMode.HTML
     )
     await callback.answer()

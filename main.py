@@ -8,7 +8,10 @@ gc = pygsheets.authorize(service_file='service-acount.json')
 
 
 sh = gc.open(settings.TABLE_NAME)
-wks = sh.settings.SHEET_NUMBER
+
+sheet_title = settings.SHEET_TITLE
+
+wks = sh.worksheet_by_title(sheet_title)
 
 
 col_month = {1:'B', 2:'D', 3:'F', 4:'H', 5:'J', 6:'L', 7:'N', 8:'P', 9:'R', 10:'T', 11:'V', 12:'X'}
@@ -72,4 +75,3 @@ def work_money():
     cell_col = wks.cell(col)
     val = int(cell_col.value)
     return val
-
