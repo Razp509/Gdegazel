@@ -34,7 +34,8 @@ async def process_start_command(message: Message) -> None:
         f"Дополнительные ссылки:\n"
         f"- {html.link('Таблица: Газель - переводы', settings.TABLE_LINK_GAZ_TRANSFER)}\n"
         f"- {html.link('Таблица: Газель - общее', settings.TABLE_LINK_GAZ_TOTAL)}\n"
-        f"- {html.link('Таблица: Daihatsu - общее', settings.TABLE_LINK_HIJET_TOTAL)}",
+        f"- {html.link('Таблица: Daihatsu - общее', settings.TABLE_LINK_HIJET_TOTAL)}\n\n"
+        f"- {html.link('Google диск ГАЛИЛЕО', settings.G_DISK)}",
         reply_markup=keyboard_inline,
         parse_mode=ParseMode.HTML
     )
@@ -119,6 +120,15 @@ async def send_info(callback: CallbackQuery):
         parse_mode=ParseMode.HTML
     )
     await callback.answer()
+
+
+@dp.callback_query(lambda c: c.data == "dispatch")
+async def process_dispatch_button(callback_query: CallbackQuery) -> None:
+    if not is_allowed(callback_query.from_user.id):
+        await callback_query.message.answer("Доступ запрещен.")
+        return
+    
+    await callback_query.answer(url=settings.DISPATCH_LINK)
 
 
 async def main() -> None:

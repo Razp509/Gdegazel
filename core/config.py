@@ -22,6 +22,10 @@ class Settings:
     TABLE_LINK_GAZ_TRANSFER = os.environ.get('TABLE_LINK_GAZ_TRANSFER')
     TABLE_LINK_HIJET_TOTAL = os.environ.get('TABLE_LINK_HIJET_TOTAL')
 
+    DISPATCH_LINK = os.environ.get('DISPATCH_LINK')
+
+    G_DISK = os.environ.get('G_DISK')
+
     # Ячейки таблицы для подсчета сумм
     CELL_TOTAL_DAYS = os.environ.get('CELL_TOTAL_DAYS')
     CELL_TOTAL_AMOUNT = os.environ.get('CELL_TOTAL_AMOUNT')
