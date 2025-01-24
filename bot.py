@@ -122,14 +122,6 @@ async def send_info(callback: CallbackQuery):
     await callback.answer()
 
 
-@dp.callback_query(lambda c: c.data == "dispatch")
-async def process_dispatch_button(callback_query: CallbackQuery) -> None:
-    if not is_allowed(callback_query.from_user.id):
-        await callback_query.message.answer("Доступ запрещен.")
-        return
-    
-    await callback_query.answer(url=settings.DISPATCH_LINK)
-
 
 async def main() -> None:
     bot = Bot(token=settings.TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
