@@ -14,6 +14,9 @@ RUN pip install --user 'aiogram==3.6.0', 'pygsheets==2.0.6', 'google-api-python-
 # install git
 RUN apt-get update && apt-get install -y git
 
+# configure git to trust the directory
+RUN git config --global --add safe.directory /usr/src/app
+
 # copy the watch script
 COPY watch_git.sh /usr/src/app/watch_git.sh
 
