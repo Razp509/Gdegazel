@@ -6,7 +6,7 @@ update_and_restart() {
     git pull
     if [ $? -eq 0 ]; then
         echo "Updates found, restarting application..."
-        python bot.py
+        python main.py
     else
         echo "No updates found."
     fi
@@ -17,7 +17,7 @@ check_env_changes() {
     if [ "$(cat .env | md5sum)" != "$(cat .env.bak | md5sum)" ]; then
         echo ".env file changed, restarting application..."
         cp .env .env.bak
-        python bot.py
+        python main.py
     fi
 }
 

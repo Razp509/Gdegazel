@@ -21,6 +21,8 @@ class Settings:
     TABLE_LINK_GAZ_TOTAL = os.environ.get('TABLE_LINK_GAZ_TOTAL')
     TABLE_LINK_GAZ_TRANSFER = os.environ.get('TABLE_LINK_GAZ_TRANSFER')
     TABLE_LINK_HIJET_TOTAL = os.environ.get('TABLE_LINK_HIJET_TOTAL')
+    CONTACT_LINK = os.environ.get('CONTACT_LINK')
+    TRACKER_LINK = os.environ.get('TRACKER_LINK')
 
     DISPATCH_LINK = os.environ.get('DISPATCH_LINK')
 
