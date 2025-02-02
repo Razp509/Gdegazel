@@ -9,9 +9,11 @@ gc = pygsheets.authorize(service_file='service-acount.json')
 
 sh = gc.open(settings.TABLE_NAME)
 
-sheet_title = settings.SHEET_TITLE
+sheet_1 = settings.WORK_SHEET_1
+sheet_2 = settings.WORK_SHEET_2
 
-wks = sh.worksheet_by_title(sheet_title)
+wks_1 = sh.worksheet_by_title(sheet_1)
+wks_2 = sh.worksheet_by_title(sheet_2)
 
 
 col_month = {1:'B', 2:'D', 3:'F', 4:'H', 5:'J', 6:'L', 7:'N', 8:'P', 9:'R', 10:'T', 11:'V', 12:'X'}
@@ -32,7 +34,7 @@ def day():
         
 def into_cell(money_received):
     col = f'{col_month.get(month())}{day() + 1}'
-    value_cell = wks.cell(col)    
+    value_cell = wks_2.cell(col)    
     if value_cell.value == '':
         value_cell.value = money_received
         value_cell.update()
@@ -43,35 +45,53 @@ def into_cell(money_received):
 
 def cell_clear():
     col = f'{col_month.get(month())}{day() + 1}'
-    value_cell = wks.cell(col)
+    value_cell = wks_2.cell(col)
     value_cell.value = ''
     value_cell.update()
     return "Ячейка очищена"
 
 
-def all_work_day():
-    col = settings.CELL_TOTAL_DAYS
-    cell_col = wks.cell(col)    
+def month_work_day():
+    col = f'{work_day_month.get(month())}38'
+    cell_col = wks_2.cell(col)    
     val = int(cell_col.value)
     return val
 
 
-def work_day():
-    col = f'{work_day_month.get(month())}{settings.FLOATING_CELL_COUNT}' #
-    cell_col = wks.cell(col)    
+def month_work_money():
+    col = f'{col_month.get(month())}38'
+    cell_col = wks_2.cell(col)
     val = int(cell_col.value)
+    return val
+
+
+def year_work_day():
+    col = 'A41'
+    cell_col = wks_2.cell(col)    
+    val = int(cell_col.value)
+    return val
+
+
+def year_work_money():
+    col = 'C41'
+    cell_col = wks_2.cell(col)
+    val = int(cell_col.value)
+    return val
+
+
+def all_work_day():
+    col_old = 'A48'
+    col = 'A41'
+    cell_col_old = wks_1.cell(col_old)
+    cell_col = wks_2.cell(col)
+    val = int(cell_col_old.value) + int(cell_col.value)
     return val
 
 
 def all_work_money():
-    col = settings.CELL_TOTAL_AMOUNT
-    cell_col = wks.cell(col)
-    val = int(cell_col.value)
-    return val
-
-
-def work_money():
-    col = f'{col_month.get(month())}{settings.FLOATING_CELL_COUNT}' #
-    cell_col = wks.cell(col)
-    val = int(cell_col.value)
+    col_old = 'C48'
+    col = 'C41'
+    cell_col_old = wks_1.cell(col_old)
+    cell_col = wks_2.cell(col)
+    val = int(cell_col_old.value) + int(cell_col.value)
     return val

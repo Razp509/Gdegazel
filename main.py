@@ -12,9 +12,18 @@ from aiogram.fsm.context import FSMContext
 
 from core.config import settings
 from core.security import check_access
-from services.worksheets import into_cell, cell_clear, all_work_day, all_work_money, work_day, work_money
 from state.states import Form
 from keyboards.keyboards import keyboard_inline
+from services.worksheets import (
+    into_cell, 
+    cell_clear, 
+    year_work_day, 
+    year_work_money, 
+    month_work_day, 
+    month_work_money, 
+    all_work_day, 
+    all_work_money
+)
 
  
 dp = Dispatcher()
@@ -35,7 +44,8 @@ async def process_start_command(message: Message) -> None:
         f"- {html.link('Таблица: Контакты', settings.CONTACT_LINK)}\n\n"
         f"- {html.link('Google диск ГАЛИЛЕО', settings.G_DISK)}",
         reply_markup=keyboard_inline,
-        parse_mode=ParseMode.HTML
+        parse_mode=ParseMode.HTML,
+        disable_web_page_preview=True
     )
 
 
@@ -104,11 +114,18 @@ async def send_info(callback: CallbackQuery):
     if not await check_access(callback.from_user.id, callback):
         return
 
-    a_w_day, a_w_money, w_day, w_money = all_work_day(), all_work_money(), work_day(), work_money()
+    m_w_day, m_w_money = month_work_day(), month_work_money()
+    y_w_day, y_w_money = year_work_day(), year_work_money()
+    a_w_day, a_w_money = all_work_day(), all_work_money()
 
     await callback.message.answer(
-        f"Всего дней отработано: {a_w_day}, в этом месяце: {w_day}\n"
-        f"Общая сумма заработка: {a_w_money}, в этом месяце: {w_money}\n\n",
+        f"Заработано:\n"
+        f"Месяц:\n"
+        f"    сумма: {m_w_money}, дней: {m_w_day}\n"
+        f"Год:\n"
+        f"    сумма: {y_w_money}, дней: {y_w_day}\n"
+        f"Общая\n"
+        f"    сумма: {a_w_money}, дней: {a_w_day}\n",
         parse_mode=ParseMode.HTML
     )
     await callback.answer()

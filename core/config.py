@@ -15,7 +15,8 @@ class Settings:
     TABLE_NAME = os.environ.get('TABLE_NAME')
 
     # Номер листа Google Sheets
-    SHEET_TITLE = os.environ.get('SHEET_TITLE')
+    WORK_SHEET_1 = os.environ.get('WORK_SHEET_1')
+    WORK_SHEET_2 = os.environ.get('WORK_SHEET_2')
 
     # Ссылки на таблицы
     TABLE_LINK_GAZ_TOTAL = os.environ.get('TABLE_LINK_GAZ_TOTAL')
