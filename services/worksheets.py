@@ -9,9 +9,11 @@ gc = pygsheets.authorize(service_file='service-acount.json')
 
 sh = gc.open(settings.TABLE_NAME)
 
+sheet_now = settings.WORK_SHEET_NOW
 sheet_1 = settings.WORK_SHEET_1
 sheet_2 = settings.WORK_SHEET_2
 
+wks_now = sh.worksheet_by_title(sheet_now)
 wks_1 = sh.worksheet_by_title(sheet_1)
 wks_2 = sh.worksheet_by_title(sheet_2)
 
@@ -34,7 +36,7 @@ def day():
         
 def into_cell(money_received):
     col = f'{col_month.get(month())}{day() + 1}'
-    value_cell = wks_2.cell(col)    
+    value_cell = wks_now.cell(col)    
     if value_cell.value == '':
         value_cell.value = money_received
         value_cell.update()
@@ -45,7 +47,7 @@ def into_cell(money_received):
 
 def cell_clear():
     col = f'{col_month.get(month())}{day() + 1}'
-    value_cell = wks_2.cell(col)
+    value_cell = wks_now.cell(col)
     value_cell.value = ''
     value_cell.update()
     return "Ячейка очищена"
@@ -53,28 +55,28 @@ def cell_clear():
 
 def month_work_day():
     col = f'{work_day_month.get(month())}38'
-    cell_col = wks_2.cell(col)    
+    cell_col = wks_now.cell(col)    
     val = int(cell_col.value)
     return val
 
 
 def month_work_money():
     col = f'{col_month.get(month())}38'
-    cell_col = wks_2.cell(col)
+    cell_col = wks_now.cell(col)
     val = int(cell_col.value)
     return val
 
 
 def year_work_day():
     col = 'A41'
-    cell_col = wks_2.cell(col)    
+    cell_col = wks_now.cell(col)    
     val = int(cell_col.value)
     return val
 
 
 def year_work_money():
     col = 'C41'
-    cell_col = wks_2.cell(col)
+    cell_col = wks_now.cell(col)
     val = int(cell_col.value)
     return val
 
@@ -83,8 +85,9 @@ def all_work_day():
     col_old = 'A48'
     col = 'A41'
     cell_col_old = wks_1.cell(col_old)
-    cell_col = wks_2.cell(col)
-    val = int(cell_col_old.value) + int(cell_col.value)
+    cell_col_old_2 = wks_2.cell(col)
+    cell_col = wks_now.cell(col)
+    val = int(cell_col_old.value) + int(cell_col.value) + int(cell_col_old_2.value)
     return val
 
 
@@ -92,6 +95,7 @@ def all_work_money():
     col_old = 'C48'
     col = 'C41'
     cell_col_old = wks_1.cell(col_old)
-    cell_col = wks_2.cell(col)
-    val = int(cell_col_old.value) + int(cell_col.value)
+    cell_col_old_2 = wks_2.cell(col)
+    cell_col = wks_now.cell(col)
+    val = int(cell_col_old.value) + int(cell_col.value) + int(cell_col_old_2.value)
     return val
